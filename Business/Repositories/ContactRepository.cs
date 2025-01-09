@@ -9,7 +9,6 @@ namespace Business.Repositories
     {
         private readonly IFileService _fileService;
 
-        // Konstruktor
         public ContactRepository(IFileService fileService)
         {
             _fileService = fileService;

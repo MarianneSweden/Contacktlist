@@ -19,7 +19,7 @@ namespace Console_MainApp.Dialogs
                 Console.WriteLine("******* CONTACT LIST ********");
                 Console.WriteLine("1. Add new contact");
                 Console.WriteLine("2. View all contacts");
-                Console.WriteLine("Q. Exit application");
+               // Console.WriteLine("Q. Exit application");
                 Console.WriteLine("*****************************");
                 Console.Write("Enter option: ");
                 var option = Console.ReadLine()!.ToUpper();
@@ -122,4 +122,5 @@ namespace Console_MainApp.Dialogs
         }
     }
 }
+
 
