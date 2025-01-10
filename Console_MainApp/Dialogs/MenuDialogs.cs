@@ -19,27 +19,31 @@ namespace Console_MainApp.Dialogs
                 Console.WriteLine("******* CONTACT LIST ********");
                 Console.WriteLine("1. Add new contact");
                 Console.WriteLine("2. View all contacts");
-               // Console.WriteLine("Q. Exit application");
+                Console.WriteLine("3. Update contact");
+                Console.WriteLine("4. Delete contact");
+                Console.WriteLine("Q. Exit application");
                 Console.WriteLine("*****************************");
                 Console.Write("Enter option: ");
-                var option = Console.ReadLine()!.ToUpper();
+                var option = Console.ReadLine()?.ToUpper();
 
                 switch (option)
                 {
                     case "1":
                         AddNewContact();
                         break;
-
                     case "2":
                         ViewAllContact();
                         break;
-
+                    case "3":
+                        UpdateContact();
+                        break;
+                    case "4":
+                        DeleteContact();
+                        break;
                     case "Q":
-                        Console.WriteLine("Exiting application. Goodbye!");
                         return;
-
                     default:
-                        Console.WriteLine("Invalid option. Press any key to try again.");
+                        Console.WriteLine("Invalid option. Please try again.");
                         Console.ReadKey();
                         break;
                 }
@@ -114,6 +118,58 @@ namespace Console_MainApp.Dialogs
             Console.WriteLine("Press any key to return to the main menu...");
             Console.ReadKey();
         }
+
+        // Uppdatera en kontakt
+        public void UpdateContact()
+        {
+            Console.Clear();
+            Console.WriteLine("******* UPDATE CONTACT ********");
+            Console.Write("Enter the ID of the contact to update: ");
+            var id = Console.ReadLine();
+
+            var contact = _contactService.GetContact(c => c.Id == id);
+
+            if (contact == null)
+            {
+                Console.WriteLine("Contact not found. Press any key to return to the menu.");
+                Console.ReadKey();
+                return;
+            }
+
+            Console.WriteLine($"Current Info: {contact.FirstName} {contact.LastName} ({contact.Email})");
+
+            Console.Write("Enter new First Name (leave blank to keep current): ");
+            var newFirstName = Console.ReadLine();
+            if (!string.IsNullOrEmpty(newFirstName)) contact.FirstName = newFirstName;
+
+            Console.Write("Enter new Last Name (leave blank to keep current): ");
+            var newLastName = Console.ReadLine();
+            if (!string.IsNullOrEmpty(newLastName)) contact.LastName = newLastName;
+
+            Console.Write("Enter new Email (leave blank to keep current): ");
+            var newEmail = Console.ReadLine();
+            if (!string.IsNullOrEmpty(newEmail)) contact.Email = newEmail;
+
+            var updated = _contactService.UpdateContact(c => c.Id == id, contact);
+
+            Console.WriteLine(updated ? "Contact updated successfully!" : "Failed to update contact.");
+            Console.ReadKey();
+        }
+
+        // Ta bort en kontakt
+        public void DeleteContact()
+        {
+            Console.Clear();
+            Console.WriteLine("******* DELETE CONTACT ********");
+            Console.Write("Enter the ID of the contact to delete: ");
+            var id = Console.ReadLine();
+
+            var deleted = _contactService.DeleteContact(c => c.Id == id);
+
+            Console.WriteLine(deleted ? "Contact deleted successfully!" : "Failed to delete contact or contact not found.");
+            Console.ReadKey();
+        }
+
 
         public void OutputDialog(string message)
         {
