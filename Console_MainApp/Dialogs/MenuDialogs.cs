@@ -11,6 +11,7 @@ namespace Console_MainApp.Dialogs
             _contactService = contactService;
         }
 
+
         public void MainMenu()
         {
             while (true)
